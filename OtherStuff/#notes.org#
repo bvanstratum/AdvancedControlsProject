@@ -1,0 +1,23 @@
+\[
+\left(\begin{array}{ccc}
+I_{1}+\frac{{L_{1}}^2\,m_{1}}{4}+{L_{1}}^2\,m_{2}+{L_{1}}^2\,\mathrm{mb}
+&
+\frac{L_{1}\,\cos\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)\,\left(L_{2}\,m_{2}+2\,S\,\mathrm{mb}\right)}{2}
+&
+-L_{1}\,\mathrm{mb}\,\sin\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)\\ \frac{L_{1}\,\cos\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)\,\left(L_{2}\,m_{2}+2\,S\,\mathrm{mb}\right)}{2}
+& \frac{m_{2}\,{L_{2}}^2}{4}+\mathrm{mb}\,S^2+I_{2} &
+0\\ -L_{1}\,\mathrm{mb}\,\sin\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)
+& 0 & \mathrm{mb} \end{array}\right)
+\]
+
+
+
+\[
+\left(\begin{array}{ccc} 0 &
+2\,L_{1}\,\mathrm{dS}\,\mathrm{mb}\,\cos\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)+L_{1}\,L_{2}\,\mathrm{dTh}_{2}\,m_{2}\,\sin\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)+2\,L_{1}\,S\,\mathrm{dTh}_{2}\,\mathrm{mb}\,\sin\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)
+&
+2\,L_{1}\,\mathrm{dTh}_{2}\,\mathrm{mb}\,\cos\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)\\ -L_{1}\,\mathrm{dTh}_{1}\,\sin\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)\,\left(L_{2}\,m_{2}+2\,S\,\mathrm{mb}\right)
+& 2\,S\,\mathrm{dS}\,\mathrm{mb} &
+2\,S\,\mathrm{dTh}_{2}\,\mathrm{mb}\\ -2\,L_{1}\,\mathrm{dTh}_{1}\,\mathrm{mb}\,\cos\left(\mathrm{Th}_{1}-\mathrm{Th}_{2}\right)
+& -2\,S\,\mathrm{dTh}_{2}\,\mathrm{mb} & 0 \end{array}\right)
+\]
