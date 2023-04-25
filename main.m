@@ -1,7 +1,7 @@
 close all
 clear all
 clc
-% git test
+
 %% system params
 I1 = 1;         %rotational inertia of link one 
 I2 = 1;         %rotational inertia of link two
