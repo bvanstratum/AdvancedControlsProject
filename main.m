@@ -1,7 +1,7 @@
 close all
 clear all
 clc
-
+ % test git with new nameS
 %% system params
 I1 = 1;         %rotational inertia of link one 
 I2 = 1;         %rotational inertia of link two
