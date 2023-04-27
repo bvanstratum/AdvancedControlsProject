@@ -7,9 +7,7 @@ FPS = 60; % frames per second
 tspan_anim = tsim(1):1/FPS:tsim(end); % simulation time span
 Xout = interp1(tsim,xsim,tspan_anim); %interpolate the needed frames
 %nframes = diff(tspan_anim)*FPS; % total number of frames
-v = VideoWriter('BallLevelUncontr3.mp4','MPEG-4');
-v.FrameRate = FPS;
-open(v)
+
 % ReSet Initial Conditions for Animation 
 %tspan_anim = 0:1/FPS:3; % simulation time span
 th1_0   = Xout(1,1);         % Theta1
@@ -19,17 +17,37 @@ dth1_0  = Xout(1,4);         % dtheta1/dt
 dth2_0  = Xout(1,5);         % dtheta2/dt
 ds_0    = Xout(1,6);
 
+
+
+
 % create figure and axes
 figure();
 % axes('XLim',[-2,2],'YLim',[-2,2]);
 axis equal
 set(gcf,"Color", [1 1 1]);
-title(['\theta_1 =  '+string(round(th1_0,2))+...
+X0string = ['\theta_1 =  '+string(round(th1_0,2))+...
     ', \theta_2 = '+string(round(th2_0,2))+...
     ', s = '+string(round(s_0,2))+...
     ', d\theta_1 = '+string(round(dth1_0,2))+...
     ', d\theta_2 = '+string(round(dth2_0,2))+...
-    ', ds = '+string(round(ds_0,2))]);
+    ', ds = '+string(round(ds_0,2))]
+title(X0string);
+
+fileLocName = X0string;
+fileLocName = strrep(fileLocName,'.','p');
+fileLocName = strrep(fileLocName,'=','');
+fileLocName = strrep(fileLocName,'\theta','th');
+fileLocName = strrep(fileLocName,' ','');
+fileLocName = strrep(fileLocName,'th_1','Th1-');
+fileLocName = strrep(fileLocName,'th_2','Th2-');
+fileLocName = strrep(fileLocName,'s','S-');
+fileLocName = strrep(fileLocName,',','');
+fileLocName = ['./VideoFiles/'+fileLocName+'.mp4']
+v = VideoWriter(fileLocName,'MPEG-4');
+v.FrameRate = FPS;
+open(v)
+
+
 hold on
 
 %linkagesim = interp1(TOUT,Xout, tspan_anim);

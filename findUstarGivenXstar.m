@@ -1,16 +1,21 @@
-function [A, B, Ustar] = fundUstarGivenXstar(params,Xstar,debug)
-syms r th dr dth  k m r0 br bt g ur uth 
+function [A, B, Ustar] = fundUstarGivenXstar(params,F,dX,X,Xstar)
+% syms r th dr dth  k m r0 br bt g ur uth 
 %the dynamics given in the problem
-f1 = r*dth^2-k/m*(r-r0)+cos(th)-br*dr+ur
-f2 = -g/r*sin(th)-2*dr*dth/r-bt*dth+uth
-r_zero     =  r == Xstar(1);
-theta_zero = th == Xstar(2); %theta zero pt
-Xdot = [dr dth f1 f2].'
-x    = [r th dr dth]
-u_sym = [ur uth].'
+% f1 = r*dth^2-k/m*(r-r0)+cos(th)-br*dr+ur
+% f2 = -g/r*sin(th)-2*dr*dth/r-bt*dth+uth
+syms Uth1 Uth2
+U = [Uth1 Uth2 0].'
+
+% r_zero     =  r == Xstar(1);
+% theta_zero = th == Xstar(2); %theta zero pt
+% Xdot = [dr dth f1 f2].'
+% x    = [r th dr dth]
+% u_sym = [ur uth].'
 % set the dx vector to zero and solve for x
-XdotEqZero = Xdot == [0 0 0 0]';
-XplusUstar = solve([XdotEqZero;theta_zero;r_zero],[x, ur, uth])
+eomsAtoperatingPt = subs(F,dX,zeros(length(dX),1))
+XdotEqZero = F(4:6)-U == zeros(size(dX(4:6)));
+XdotEqZero = subs(XdotEqZero,X,Xstar');
+XplusUstar = solve([XdotEqZero],[Uth1, Uth2])
 
 %numerical Xstar
 XplusUstar = double(...

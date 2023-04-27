@@ -181,5 +181,18 @@ latex(simplify(expand(subs(G,{ddTh1,ddTh2, ddS,...
 
 
 %% now compute the a matrix 
-%  Xstar = [pi/4 0 0 0 0 0].'; 
-%          [A_lin, B_lin, Ustar]  = findUstarGivenXstar(params,f3,f4,f5,Xstar,debug)
+Xstar = [pi/4 0 0.5 0 0 0].'; 
+
+F  = [ dTh1
+       dTh2
+       dS
+      Sln.ddTh1
+      Sln.ddTh2
+      Sln.ddS];
+dX = [dTh1 dTh2 dS ddTh1 ddTh2 ddS].'
+A = jacobian(F,cell2sym(X'))
+matlabFunction(A,'File','Afun.m','vars',{[Th1;Th2;S;dTh1;dTh2;dS],...
+    [I1 I2 m1 m2 mb L1 L2 g]})
+
+
+[A_lin, B_lin, Ustar] = findUstarGivenXstar(params,F,dX,X,Xstar)
