@@ -31,14 +31,23 @@ B = [0 0
      1 0
      0 1
      0 0];
-Xstar = [pi/4 pi 0.5 0 0 0].';
+ClinSys = diag([1 1 1 0 0 0]);
+
+
+
+Xstar       = [pi/4 pi 0.5 0 0 0].';
+X0          = Xstar   +0.0;
+Xestimate   = X0      -0.15;
+XplusXe0    = [X0;Xestimate]
 Ustar = G(0,Xstar);
 Ustar(end) = []; %throw away the last value since underactuated
 A = Afun(Xstar,params2array(param));
 P = [-3 -4 -5 -6 -7 -8].*0.8; %2 %multiplier of 2 works for speed of -0.4
-
-
 K = place(A,B,P);
+q = P*10; %make observer poles a decade faster than controller
+L = place(A',ClinSys',q).';
+
+
 regulator = 0
 if regulator
     x_desired = @(t) [0 0 0 0 0 0]';
@@ -46,21 +55,30 @@ else
     x_desired = @(t) [0 0 0.1*sin(t) 0 0 0.1*cos(t)]';
 end
 
-U_controller = @(X,t) -K*(X-Xstar-x_desired(t))+Ustar
+% U_controller = @(X,t) -K*(X-Xstar-x_desired(t))+Ustar
 %% run the simulation
-ODEFUN = @(t,X) GeneralODEfun(M,C,G,X,t,L1,mb,dX,U_controller(X,t))
+ODEFUN = @(t,X) GeneralODEfun(M,C,G,X,t,L1,mb,dX,Xstar,Ustar,K,A,B,ClinSys,L)
 
-X0 = Xstar%[pi/4 pi 0.5 0 0 0]' %[th1 th2 s dth1 dth2 ds];
+%[pi/4 pi 0.5 0 0 0]' %[th1 th2 s dth1 dth2 ds];
 TSPAN = [0 10];
-[TOUT,Xout] = ode45(ODEFUN,TSPAN,X0);
+[TOUT,Xout] = ode45(ODEFUN,TSPAN,XplusXe0);
 subplot(3,1,1)
 plot(TOUT,Xout(:,1))
+hold on
+plot(TOUT,Xout(:,7))
+legend('actual','estimate')
 ylabel('\theta_1')
 subplot(3,1,2)
 plot(TOUT,Xout(:,2))
+hold on
+plot(TOUT,Xout(:,8))
+legend('actual','estimate')
 ylabel('\theta_2')
 subplot(3,1,3)
 plot(TOUT,Xout(:,3))
+hold on
+plot(TOUT,Xout(:,9))
+legend('actual','estimate')
 ylabel('s')
 xlabel('time [s]')
 figure
