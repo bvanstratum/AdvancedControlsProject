@@ -4,7 +4,11 @@ function dX = GeneralODEfun(M,C,G,XplusXe,t,L1,mb,dXfun,Xstar,Ustar,K,A,B,CLinSy
 X = XplusXe(1:6);
 X_estimate  = XplusXe(7:end);
 x_desired = @(t) [0 0 0 0 0 0]';
+%==========controller
 U = -K*(X_estimate-Xstar-x_desired(t))+Ustar;
+%===================
+
+
 
 %======update the observer===========
 y           = CLinSys*(X-Xstar);

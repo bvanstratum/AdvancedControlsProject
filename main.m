@@ -35,9 +35,11 @@ ClinSys = diag([1 1 1 0 0 0]);
 
 
 
-Xstar       = [pi/4 pi 0.5 0 0 0].';
+Xstar       = [pi/4 pi 0.5 0 0 0].';%th1 th2 s dth1 dth2 ds
 X0          = Xstar   +0.0;
-Xestimate   = X0      -0.15;
+X0(2)       = pi+.2
+X0(6)       = -0.2
+Xestimate   = X0      -0.0;
 XplusXe0    = [X0;Xestimate]
 Ustar = G(0,Xstar);
 Ustar(end) = []; %throw away the last value since underactuated
@@ -59,9 +61,16 @@ end
 %% run the simulation
 ODEFUN = @(t,X) GeneralODEfun(M,C,G,X,t,L1,mb,dX,Xstar,Ustar,K,A,B,ClinSys,L)
 
+
 %[pi/4 pi 0.5 0 0 0]' %[th1 th2 s dth1 dth2 ds];
 TSPAN = [0 10];
 [TOUT,Xout] = ode45(ODEFUN,TSPAN,XplusXe0);
+if (abs(Xstar'-Xout(end,1:6)) < 1e-1)
+    output = 'good'
+else
+    output = 'bad'
+end
+
 subplot(3,1,1)
 plot(TOUT,Xout(:,1))
 hold on
